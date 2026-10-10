@@ -1,4 +1,5 @@
 # Homework 1: Pytorch tutorial
+
 **Due Date: 05.03.26 23:59 CET**
 **Needs to be solved individually. Gradescope checks for duplicate code.**
 
@@ -6,7 +7,7 @@
 
 ### 1) Create a virtual environment
 
-You may use any package manager. We demonstrate the setup with `uv`, an extremely fast Python package installer and manager: https://github.com/astral-sh/uv.
+You may use any package manager. We demonstrate the setup with `uv`, an extremely fast Python package installer and manager: <https://github.com/astral-sh/uv>.
 
 From the repo root:
 
@@ -24,13 +25,12 @@ source .venv/bin/activate
 uv pip install torch torchvision jupyter
 ```
 
-For an introduction on how to use jupyter notebooks, you may check this ressource: https://docs.jupyter.org/en/latest/
+For an introduction on how to use jupyter notebooks, you may check this ressource: <https://docs.jupyter.org/en/latest/>
 
 ## Getting started
 
-All exercises live in `src/`.
-Most of these exercises can be solved in very few/one line of code, you're free to use all of torch unless otherwise specified. Usually functions shouldn't change the dtype or device of a tensor. If you receive a dtype
-or device make sure to use it for your returned tensors.
+All exercises live in `src/`.  
+Most of these exercises can be solved in very few/one line of code, you're free to use all of torch unless otherwise specified. Usually functions shouldn't change the dtype or device of a tensor. If you receive a dtype or device make sure to use it for your returned tensors.
 
 ### Exercise 1: Tensor basics
 
@@ -82,23 +82,23 @@ To submit your work, you must be enrolled in the course on Gradescope.
 
 You should've received an email with gradescope details. Please follow the instructions in the email.
 
-If you didn't get an email for gradescope (e.g. you're late enrolled to this course) write Alexey an email: agavryushin@ethz.ch
+If you didn't get an email for gradescope (e.g. you're late enrolled to this course) write Alexey an email: <agavryushin@ethz.ch>
 
 ### 2. Assignment Submission
 
 You will submit **all deliverables** (Code and Video) to the single assignment named **"Homework 1"**.
 
-1.  Navigate to the course page on Gradescope.
-2.  Click on the assignment **"Homework 1"**.
-3.  Drag and drop (or select) the following files from your computer:
-    - `ex1.ipynb`
-    - `ex2.ipynb`
-    - `ex3.ipynb`
-    - `ex4.ipynb`
-    - Your video file (`.mp4`)
-4.  Click **Upload**.
-5.  **Autograding:** A text box will appear showing the autograder's progress on your code. Wait for it to finish to see your preliminary score for the coding exercises.
-6.  **Manual Grading:** The teaching assistants will manually review your video after the deadline. Your final score will be updated to include points for the presentation components. Coding problems and the video each count for 50 of the achievable 100 points for this homework.
+1. Navigate to the course page on Gradescope.
+2. Click on the assignment **"Homework 1"**.
+3. Drag and drop (or select) the following files from your computer:
+   - `ex1.ipynb`
+   - `ex2.ipynb`
+   - `ex3.ipynb`
+   - `ex4.ipynb`
+   - Your video file (`.mp4`)
+4. Click **Upload**.
+5. **Autograding:** A text box will appear showing the autograder's progress on your code. Wait for it to finish to see your preliminary score for the coding exercises.
+6. **Manual Grading:** The teaching assistants will manually review your video after the deadline. Your final score will be updated to include points for the presentation components. Coding problems and the video each count for 50 of the achievable 100 points for this homework.
 
 ### Video submission
 
@@ -110,3 +110,4 @@ You will submit **all deliverables** (Code and Video) to the single assignment n
 - You may focus your time in the video on ex4 and only briefly show that ex3 was completed correctly at the beginning.
 - We use the video to additionally grade your understanding of ex4. We look for correct reasoning instead of a clear yes or no answer. Please make sure to find the right arguments for your conclusions.
 - If you import utilities for plotting or other things please remove them before submitting to the autograder.
+
