@@ -27,6 +27,7 @@ if __name__ == "__main__":
     waypoints = generate_waypoint_function(keypoints[keypoint_id], keypoints[next_keypoint_id], num_waypoints)
     
     with mujoco.viewer.launch_passive(model, data) as viewer:
+        viewer.opt.frame = mujoco.mjtFrame.mjFRAME_WORLD
         refresh_markers(viewer, keypoints)
         while viewer.is_running():
             next_keypoint_id = (keypoint_id + 1) % len(keypoints)

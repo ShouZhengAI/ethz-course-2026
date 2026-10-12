@@ -21,7 +21,7 @@ def reset_robot(default_qpos: np.ndarray) -> np.ndarray:
     Returns:
     - reset_qpos: np.ndarray. The joint positions to reset the robot to. Dimensionality: 1D array, Shape: (num_joints,).
     """
-    raise NotImplementedError()
+    return default_qpos + np.random.uniform(-0.5, 0.5, size=default_qpos.shape)
     
 
 
@@ -39,7 +39,8 @@ def reset_target_position(base_pos: np.ndarray) -> np.ndarray:
     Returns:
     - target_pos: np.ndarray. The 3D position of the target relative to the base. Dimensionality: 1D array, Shape: (3,).
     """
-    raise NotImplementedError()
+    offset = np.random.uniform([0.2, -0.2, 0.1], [0.4, 0.2, 0.4])
+    return base_pos + offset
 
 
 def process_action(action: np.ndarray, jnt_range: np.ndarray) -> np.ndarray:
@@ -57,7 +58,10 @@ def process_action(action: np.ndarray, jnt_range: np.ndarray) -> np.ndarray:
     Returns:
     - target_qpos: np.ndarray. Target joint positions to apply as control. Dimensionality: 1D array, Shape: (num_joints,).
     """
-    raise NotImplementedError()
+    action = np.clip(action, -1, 1)
+    lower = jnt_range[:, 0]
+    upper = jnt_range[:, 1]
+    return lower + (action + 1) * 0.5 * (upper - lower)
 
 
 def compute_reward(ee_tracking_error: float) -> float:
@@ -80,7 +84,9 @@ def compute_reward(ee_tracking_error: float) -> float:
     Returns:
     - reward: float. The computed reward based on the tracking error. Dimensionality: scalar
     """
-    raise NotImplementedError()
+    dense_reward = np.exp(-2 * ee_tracking_error)
+    sparse_reward = 1.0 if ee_tracking_error < 0.005 else 0.0
+    return float(dense_reward + sparse_reward)
 
 
 def get_obs(qpos: np.ndarray, ee_pos_w: np.ndarray, ee_rot_w: np.ndarray, base_pos_w: np.ndarray, base_rot_w: np.ndarray, target_pos_w: np.ndarray) -> np.ndarray:
@@ -109,4 +115,9 @@ def get_obs(qpos: np.ndarray, ee_pos_w: np.ndarray, ee_rot_w: np.ndarray, base_p
 
     Hints: You can use the provided functions quat_mul, quat_conjugate, quat_normalize, rot_mat_to_quat for quaternion operations.
     """
-    raise NotImplementedError()
+    ee_pos_base = base_rot_w.T @ (ee_pos_w - base_pos_w)
+    target_pos_base = base_rot_w.T @ (target_pos_w - base_pos_w)
+    base_quat_w = rot_mat_to_quat(base_rot_w)
+    ee_quat_w = rot_mat_to_quat(ee_rot_w)
+    ee_quat_base = quat_normalize(quat_mul(quat_conjugate(base_quat_w), ee_quat_w))
+    return np.concatenate((qpos, ee_pos_base, ee_quat_base, target_pos_base))

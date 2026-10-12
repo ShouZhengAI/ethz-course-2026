@@ -40,6 +40,12 @@ Note that the tracking is done by purely teleporting the joint positions to the 
 2. What can happen if you change the dt parameter in IK?
 3. We implemented a simple numerical IK solver. What are the advantages and disadvantages compared to an analytical IK solver?
 4. What are the limits of our IK solver compared to state-of-the-art IK solvers?
+---
+
+1. 增大 a 可能使部分目标点超出机械臂的可达范围，导致 IK 无法收敛。
+2. 增大 dt 可能导致更新步长过大而振荡或发散，减小 dt 则通常使收敛变慢。
+3. 数值 IK 更容易实现并适用于不同机械臂，但相比解析 IK 计算更慢、依赖初始姿态且不保证找到解。
+4. 我们的求解器只跟踪位置，未处理关节限位、碰撞和多解选择，因此在约束处理和鲁棒性上不如先进求解器。
 
 The theoretical questions require only short and direct answers. Each question is expected to have a 1-sentence answer.
 
@@ -131,6 +137,11 @@ Test different settings of the gains to be able to answer the following:
 1. If you keep increasing $K_P$, what issue arises when tracking the waypoints?
 2. How does $K_D$ mitigate the effect you saw above when increasing $K_P$?
 3. In what scenarios is a non-zero $K_I$ needed for the controller to perform well?
+---
+
+1. 持续增大 $K_P$ 会使控制过于激进，导致超调、振荡，甚至失稳。
+2. $K_D$ 根据误差的变化率提供阻尼，从而减轻较大 $K_P$ 引起的超调和振荡。
+3. 当重力、恒定外力或模型偏差造成持续的稳态误差时，需要非零 $K_I$ 来累积误差并消除偏差。
 
 There is no need to show these behavior changes in the video and you can just write down your answers in the video. Or say them out loud.
 The theoretical questions require only short and direct answers. Each question is expected to have a 1-sentence answer.
@@ -225,6 +236,8 @@ python scripts/evaluate_trajectory.py --load_run=1 --checkpoint=500
 ```
 
 What difference can you observe when the robot is tracking the keypoints on the Lemniscate curve? To improve the performance of the RL policy, what changes can you make in the functions in ex3? Modify these functions (you can also change their arguments, and make corresponding changes in `env/so100_tracking_env.py`). Train another RL policy with your new environments and show the performance in the video, and explain how your changes impact the robot's performance. You can also make changes to the PPO hyperparameters (gamma, ent_coef, etc.). 
+
+相比 PID 控制，RL 策略在 ∞ 形轨迹上可能出现更明显的滞后、偏离或抖动，因为它训练时只学习追踪固定的随机目标，没有专门学习连续变化的轨迹。
 
 ## Deliverables
 1. **Video:** Video (.mp4) of the robot moving between the random targets, including the error printouts on your terminal **(< 30 s)**. If you completed the bonus question, include your answers to the theoretical questions, and performance of the new policy **(< 1 min)**.

@@ -57,7 +57,7 @@ class SO100TrackEnv(gym.Env):
     def _process_action(self, action):
         return process_action(action, self.model.jnt_range)
 
-    def compute_reward(self):
+    def _compute_reward(self):
         return compute_reward(self.ee_tracking_error)
 
     def step(self, action):
@@ -65,7 +65,7 @@ class SO100TrackEnv(gym.Env):
         for _ in range(self.ctrl_decimation): 
             mujoco.mj_step(self.model, self.data)
         self.ee_tracking_error = np.linalg.norm(self.data.site("ee_site").xpos - self.data.mocap_pos[0])
-        reward = self.compute_reward()
+        reward = self._compute_reward()
 
         terminated = False
         truncated = False
